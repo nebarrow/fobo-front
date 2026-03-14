@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { 
+  font-family: 'Montserrat', sans-serif; 
+}
+
+.accent { 
+  color: #F7D22D !important; 
+}
+
+.accent-bg { 
+  background: #F7D22D; 
+}
+
+.accent-bg:hover { 
+  background: #e6c11d; 
+}
+

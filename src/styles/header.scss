@@ -1,0 +1,49 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: 0 3px 12px -4px rgba(0,0,0,0.08);
+}
+
+.site-header .cart-inline { 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+}
+
+.logo {
+  max-height: 48px;
+}
+
+.cart-inline { 
+  border: none; 
+  box-shadow: 0 4px 10px -6px rgba(0,0,0,0.18); 
+}
+
+.cart-inline:hover { 
+  transform: translateY(-1px); 
+}
+
+.cart-inline:active { 
+  transform: translateY(0); 
+}
+
+.cart-inline.accent-bg { 
+  background: #F7D22D; 
+  border-radius: 8px; 
+}
+
+.cart-inline .cart-label { 
+  color: #231F20; 
+  display: inline-block; 
+}
+
+.cart-inline .cart-sep { 
+  margin: 0 6px; 
+  color: #231F20; 
+}
+
+.cart-inline .cart-count { 
+  color: #231F20; 
+  font-weight: 800; 
+  display: inline-block; 
+}
+

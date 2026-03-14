@@ -1,0 +1,115 @@
+.new-items-section { 
+  margin-top: 2rem; 
+  position: relative; 
+}
+
+.new-items-title { 
+  font-weight: 600; 
+  font-size: 1.05rem; 
+  margin-bottom: 1rem; 
+}
+
+.new-items-list { 
+  display: flex; 
+  width: 100%; 
+  gap: 1.25rem; 
+  justify-content: flex-start; 
+}
+
+@media (min-width: 641px) { 
+  .new-items-list { 
+    justify-content: space-between; 
+  } 
+}
+
+.new-items-item { 
+  flex: 0 0 255px; 
+  max-width: 255px; 
+  height: 99px; 
+  background: #fff; 
+  border-radius: 14px; 
+  padding: 14px 18px; 
+  display: flex; 
+  align-items: center; 
+  gap: 14px; 
+  box-shadow: 0 6px 18px -6px rgba(0,0,0,0.08); 
+  transition: box-shadow .25s ease, transform .25s ease; 
+}
+
+.new-items-item:hover { 
+  box-shadow: 0 10px 26px -8px rgba(0,0,0,0.20); 
+  transform: translateY(-3px); 
+}
+
+.new-items-img { 
+  width: 56px; 
+  height: 56px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+}
+
+.new-items-name { 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  line-height: 1.15; 
+}
+
+.new-items-price { 
+  font-size: 0.65rem; 
+  font-weight: 600; 
+  color: #F7D22D; 
+  margin-top: 4px; 
+  letter-spacing: .4px; 
+}
+
+@media (max-width: 640px) {
+  .new-items-list { 
+    overflow-x: auto; 
+    padding-bottom: 4px; 
+    scroll-snap-type: x mandatory; 
+  }
+  .new-items-item { 
+    flex: 0 0 auto; 
+    scroll-snap-align: start; 
+    min-width: 200px; 
+    padding: 12px; 
+  }
+  .new-items-list::-webkit-scrollbar { 
+    height: 6px; 
+  }
+  .new-items-list::-webkit-scrollbar-thumb { 
+    background: #d1d5db; 
+    border-radius: 3px; 
+  }
+  .new-items-img { 
+    width: 48px; 
+    height: 48px; 
+  }
+}
+
+.new-items-man { 
+  position: absolute; 
+  left: -38.9%; 
+  bottom: -50%; 
+  width: 23%; 
+  height: auto; 
+  pointer-events: none; 
+  transform: rotate(12deg); 
+  transform-origin: 50% 50%; 
+}
+
+@media (max-width: 1400px) { 
+  .new-items-man { 
+    left: -9.7%; 
+    bottom: -150%; 
+    width: 14%; 
+    transform: rotate(11deg); 
+  } 
+}
+
+@media (max-width: 960px) { 
+  .new-items-man { 
+    display: none; 
+  } 
+}
+

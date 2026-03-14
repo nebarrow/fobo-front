@@ -1,0 +1,24 @@
+.cart-drawer {
+  will-change: transform;
+}
+
+.cart-backdrop {
+  transition: opacity 200ms ease;
+}
+
+.qty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 28px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: none;
+  cursor: pointer;
+}
+
+.qty-btn:hover { 
+  background: #e5e7eb; 
+}
+
