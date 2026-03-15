@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import { useCart } from '../contexts/CartContext'
 import { bffApi } from '../api/bff'
 import { promoApi } from '../api/promo'
+import { getImagePath } from '../utils/paths'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -126,7 +127,7 @@ export default function CheckoutPage({ onNavigate }) {
                     <div className="flex items-start gap-3 sm:gap-4">
                       <div className="flex-none">
                         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden flex items-center justify-center">
-                          <img src={item.img || item.image} alt={item.title} className="w-full h-full object-cover" />
+                          <img src={getImagePath(item.img || item.image)} alt={item.title} className="w-full h-full object-cover" />
                         </div>
                       </div>
 
@@ -216,7 +217,7 @@ export default function CheckoutPage({ onNavigate }) {
                               style={{ border: '1.5px solid rgba(229,231,235,1)' }}
                             >
                               <div className="flex-none w-[70px] h-[70px] bg-white rounded overflow-hidden flex items-center justify-center">
-                                <img src={s.img || s.image} alt={s.title} className="max-w-[70px] max-h-[70px] object-contain" />
+                                <img src={getImagePath(s.img || s.image)} alt={s.title} className="max-w-[70px] max-h-[70px] object-contain" />
                               </div>
 
                               <div className="flex-1 min-w-0">
