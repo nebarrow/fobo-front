@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useCart } from '../contexts/CartContext'
 import { productsApi } from '../api/products'
+import { getImagePath } from '../utils/paths'
 
 const CATEGORIES = {
   pizza:  { title: 'Пицца',   cols: 'lg:grid-cols-4' },
@@ -27,7 +28,7 @@ function ProductCard({ p, onAdd }) {
   return (
     <div className="product-card bg-white rounded-lg shadow-md p-6 flex flex-col relative">
       <div className="image-wrap mb-4">
-        <img src={p.img || p.image} alt={p.title} className="product-img" />
+        <img src={getImagePath(p.img || p.image)} alt={p.title} className="product-img" />
       </div>
       <h3 className="text-[18px] font-semibold text-gray-700 mb-2">{p.title}</h3>
       <div className="text-sm text-gray-500 mb-4">

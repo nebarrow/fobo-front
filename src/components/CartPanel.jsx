@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useCart } from '../contexts/CartContext'
 import { productsApi } from '../api/products'
+import { getImagePath } from '../utils/paths'
 
 export default function CartPanel({ open, onClose, onCheckout }) {
   const { items, increment, decrement, removeItem, clear, totalSum, addItem } = useCart()
@@ -41,7 +42,7 @@ export default function CartPanel({ open, onClose, onCheckout }) {
               {suggestions.map(s => (
                 <div key={s.id} className="bg-white rounded p-2 flex items-center gap-3 w-full sm:w-1/2 border border-gray-200">
                   <div className="flex-none">
-                    <img src={s.img || s.image} alt={s.title} className="w-12 h-12 object-cover" style={{ border: 'none', display: 'block' }} />
+                    <img src={getImagePath(s.img || s.image)} alt={s.title} className="w-12 h-12 object-cover" style={{ border: 'none', display: 'block' }} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-semibold truncate">{s.title}</div>
@@ -62,7 +63,7 @@ export default function CartPanel({ open, onClose, onCheckout }) {
           <div className="space-y-4">
             {items.map(item => (
               <div key={item.id} className="flex items-center gap-4">
-                <img src={item.img || item.image} alt={item.title} className="w-20 h-20 object-cover rounded-md flex-none" />
+                <img src={getImagePath(item.img || item.image)} alt={item.title} className="w-20 h-20 object-cover rounded-md flex-none" />
                 <div className="flex-1 min-w-0">
                   <div className="font-semibold truncate">{item.title}</div>
                   <div className="text-sm text-gray-600 mt-1">{(item.price || 0)} ₽</div>
