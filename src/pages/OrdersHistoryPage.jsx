@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useQuery } from '@apollo/client'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import { ordersApi } from '../api/orders'
+import { ORDERS_QUERY } from '../api/graphql'
 import { useAuth } from '../contexts/AuthContext'
+import { getImagePath } from '../utils/paths'
 
 const STATUS_LABELS = {
   pending: 'Ожидает',
@@ -15,20 +17,14 @@ const STATUS_LABELS = {
 
 export default function OrdersHistoryPage({ onNavigate }) {
   const { user } = useAuth()
-  const [orders, setOrders] = useState([])
-  const [loading, setLoading] = useState(true)
   const [expandedId, setExpandedId] = useState(null)
 
-  useEffect(() => {
-    if (!user) {
-      setLoading(false)
-      return
-    }
-    ordersApi.getAll()
-      .then((data) => setOrders(data.orders || data || []))
-      .catch(() => setOrders([]))
-      .finally(() => setLoading(false))
-  }, [user])
+  const { data, loading } = useQuery(ORDERS_QUERY, {
+    skip: !user,
+    fetchPolicy: 'network-only',
+  })
+
+  const orders = data?.orders || []
 
   if (!user) {
     return (
@@ -58,7 +54,7 @@ export default function OrdersHistoryPage({ onNavigate }) {
               <div key={order.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <div>
-                    <span className="font-semibold text-gray-900">Заказ #{order.id}</span>
+                    <span className="font-semibold text-gray-900">Заказ #{order.id.slice(0, 8)}</span>
                     <span className="ml-3 text-sm text-gray-500">{order.createdAt ? new Date(order.createdAt).toLocaleDateString('ru-RU') : ''}</span>
                   </div>
                   <div className="flex items-center gap-3">
@@ -69,7 +65,7 @@ export default function OrdersHistoryPage({ onNavigate }) {
                     }`}>
                       {STATUS_LABELS[order.status] || order.status}
                     </span>
-                    <span className="font-bold text-[#F7D22D]">{(order.totalSum || 0).toLocaleString('ru-RU')} ₽</span>
+                    <span className="font-bold text-[#F7D22D]">{Number(order.totalPrice).toLocaleString('ru-RU')} ₽</span>
                   </div>
                 </div>
 
@@ -82,17 +78,21 @@ export default function OrdersHistoryPage({ onNavigate }) {
 
                 {expandedId === order.id && (
                   <div className="mt-4 border-t pt-4 space-y-2">
-                    {(order.items || []).map((item, idx) => (
-                      <div key={idx} className="flex justify-between text-sm">
-                        <span className="text-gray-700">{item.title || item.productId} × {item.qty}</span>
-                        <span className="text-gray-900 font-medium">{((item.price || 0) * (item.qty || 1)).toLocaleString('ru-RU')} ₽</span>
+                    {(order.items || []).map((item) => (
+                      <div key={item.id} className="flex items-center gap-3 text-sm">
+                        <img src={getImagePath(item.product.image)} alt={item.product.title} className="w-10 h-10 object-cover rounded" />
+                        <span className="flex-1 text-gray-700">{item.product.title} × {item.quantity}</span>
+                        <span className="text-gray-900 font-medium">{(Number(item.price) * item.quantity).toLocaleString('ru-RU')} ₽</span>
                       </div>
                     ))}
-                    {order.deliveryType && (
-                      <div className="text-xs text-gray-500 mt-2">
-                        Доставка: {order.deliveryType === 'pickup' ? 'Самовывоз' : order.address || 'Курьером'}
+                    {order.discount > 0 && (
+                      <div className="text-xs text-green-600 mt-2">
+                        Скидка: {order.discount}% (промокод: {order.promoCode})
                       </div>
                     )}
+                    <div className="text-xs text-gray-500 mt-2">
+                      Доставка: {order.deliveryType === 'pickup' ? 'Самовывоз' : 'Курьером'}
+                    </div>
                   </div>
                 )}
               </div>

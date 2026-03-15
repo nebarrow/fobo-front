@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useCart } from '../contexts/CartContext'
-import { productsApi } from '../api/products'
+import { bffApi } from '../api/bff'
 import { getImagePath } from '../utils/paths'
 
 const CATEGORIES = {
@@ -67,8 +67,8 @@ export default function CatalogPage({ category, onNavigate }) {
     let cancelled = false
     setLoading(true)
 
-    productsApi
-      .getAll({ category, sort, page, limit: PAGE_SIZE })
+    bffApi
+      .getCatalog({ category, sort, page, limit: PAGE_SIZE })
       .then((data) => {
         if (cancelled) return
         setProducts(data.items || data)

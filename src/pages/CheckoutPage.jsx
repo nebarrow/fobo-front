@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useCart } from '../contexts/CartContext'
-import { productsApi } from '../api/products'
+import { bffApi } from '../api/bff'
 import { promoApi } from '../api/promo'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
@@ -47,8 +47,8 @@ export default function CheckoutPage({ onNavigate }) {
   const nextSugg = () => suggSwiper?.slideNext()
 
   useMemo(() => {
-    productsApi.getSuggestions()
-      .then((data) => setSuggestions(data.items || data || []))
+    bffApi.getHome()
+      .then((data) => setSuggestions(data.suggestions || []))
       .catch(() => setSuggestions([]))
   }, [])
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useCart } from '../contexts/CartContext'
-import { productsApi } from '../api/products'
+import { bffApi } from '../api/bff'
 import { getImagePath } from '../utils/paths'
 
 export default function CartPanel({ open, onClose, onCheckout }) {
@@ -9,8 +9,8 @@ export default function CartPanel({ open, onClose, onCheckout }) {
 
   useEffect(() => {
     if (open) {
-      productsApi.getSuggestions()
-        .then((data) => setSuggestions((data.items || data || []).slice(0, 2)))
+      bffApi.getHome()
+        .then((data) => setSuggestions((data.suggestions || []).slice(0, 2)))
         .catch(() => setSuggestions([]))
     }
   }, [open])
