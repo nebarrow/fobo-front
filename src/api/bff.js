@@ -1,23 +1,42 @@
 import { api } from './client'
+import { productsApi } from './products'
 
 export const bffApi = {
-  getHome() {
-    return api.get('/bff/home')
+  async getHome() {
+    try {
+      return await api.get('/bff/home')
+    } catch {
+      const suggestions = await productsApi.getSuggestions()
+      return { suggestions }
+    }
   },
 
-  getCatalog({ category, sort, page = 1, limit = 12 } = {}) {
-    const params = new URLSearchParams()
-    if (sort) params.set('sort', sort)
-    params.set('page', String(page))
-    params.set('limit', String(limit))
-    return api.get(`/bff/catalog/${category}?${params}`)
+  async getCatalog({ category, sort, page = 1, limit = 12 } = {}) {
+    try {
+      const params = new URLSearchParams()
+      if (sort) params.set('sort', sort)
+      params.set('page', String(page))
+      params.set('limit', String(limit))
+      return await api.get(`/bff/catalog/${category}?${params}`)
+    } catch {
+      const data = await productsApi.getAll({ category, sort, page, limit })
+      return data
+    }
   },
 
-  getCheckout() {
-    return api.get('/bff/checkout')
+  async getCheckout() {
+    try {
+      return await api.get('/bff/checkout')
+    } catch {
+      return { items: [], subtotal: 0, count: 0 }
+    }
   },
 
-  getOrderDetails(id) {
-    return api.get(`/bff/orders/${id}`)
+  async getOrderDetails(id) {
+    try {
+      return await api.get(`/bff/orders/${id}`)
+    } catch {
+      return api.get(`/orders/${id}`)
+    }
   },
 }
